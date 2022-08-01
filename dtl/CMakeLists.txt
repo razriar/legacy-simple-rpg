@@ -5,7 +5,8 @@ set(CMAKE_CXX_STANDARD 20)
 
 add_library(${PROJECT_NAME}
     include/public/dtl/concepts/serverconcept.h
-    include/public/dtl/echoaction.h
+    include/public/dtl/actions/echoaction.h
+    include/public/dtl/actions/registeraction.h
     include/public/dtl/frontcontroller.h
     include/public/dtl/iocontext.h
     include/public/dtl/listener.h
@@ -25,6 +26,12 @@ target_include_directories(${PROJECT_NAME} PRIVATE include/private)
 
 find_package(Boost REQUIRED)
 find_package(Threads REQUIRED)
+add_subdirectory(lib/json)
 
 target_include_directories(${PROJECT_NAME} PUBLIC ${Boost_INCLUDE_DIRS})
-target_link_libraries(${PROJECT_NAME} PUBLIC ${Boost_LIBRARIES} Threads::Threads)
+target_link_libraries(${PROJECT_NAME} 
+    PUBLIC 
+    ${Boost_LIBRARIES}
+    Threads::Threads 
+    nlohmann_json::nlohmann_json
+)

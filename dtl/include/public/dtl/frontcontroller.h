@@ -20,6 +20,10 @@ template <class Action>
 concept GetResponding = requires(const Request& request) {
     { Action::Get(request) } -> std::same_as<Response>;
 };
+template <class Action>
+concept PostResponding = requires(const Request& request) {
+    { Action::Post(request) } -> std::same_as<Response>;
+};
 template <class T1, class T2>
 concept ConstructibleTo = std::constructible_from<T2, T1>;
 template <class T1, class T2>
@@ -39,9 +43,13 @@ class FrontController {
     template <Targeted Action>
     void RegisterAction() {
         auto target = Action::Target();
-        if (GetResponding<Action>) {
+        if constexpr (GetResponding<Action>) {
             auto key = std::pair(target, Method::Get);
             map_[key] = &Action::Get;
+        }
+        if constexpr (PostResponding<Action>) {
+            auto key = std::pair(target, Method::Post);
+            map_[key] = &Action::Post;
         }
     }
     template <ConstructibleTo<Request> RawRequest,
