@@ -11,6 +11,7 @@ class EchoAction {
     static Response Get(const Request &request) {
         auto response = Response();
         response.set_body(request.body());
+        response.set_code(ResponseStatus::Ok);
         return response;
     }
 };
