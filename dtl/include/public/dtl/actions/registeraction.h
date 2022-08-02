@@ -21,8 +21,7 @@ class RegisterAction {
         try {
             reg_data.email = data["email"];
             reg_data.password = data["password"];
-            reg_data.first_name = data["first_name"];
-            reg_data.last_name = data["last_name"];
+            reg_data.name = data["name"];
             reg_data.nick = data["nick"];
         } catch (json::type_error& e) {
             std::cerr << e.what() << std::endl;

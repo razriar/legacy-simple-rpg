@@ -24,8 +24,7 @@ class UserService : public IUserService {
         auto query = CreationQuery<User>();
         query.Add<User::Email>(data.email);
         query.Add<User::Password>(data.password);
-        query.Add<User::FirstName>(data.first_name);
-        query.Add<User::LastName>(data.last_name);
+        query.Add<User::Name>(data.name);
         query.Add<User::Nick>(data.nick);
         context.Execute(query);
         return Ok;
