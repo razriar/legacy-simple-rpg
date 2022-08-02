@@ -28,18 +28,23 @@ class RegisterAction {
             std::cerr << e.what() << std::endl;
             auto response = Response();
             response.set_body("Missing required data");
+            response.set_code(ResponseStatus::BadRequest);
             return response;
         }
         auto service = bll::Registry::GetUserService();
         auto status = service->RegisterUser(reg_data);
         auto response = Response();
         json body;
+        ResponseStatus code;
         if (status == bll::RegistrationStatus::UserExists) {
             body["error"] = "User with that email already exists";
+            code = ResponseStatus::Conflict;
         } else if (status == bll::RegistrationStatus::Ok) {
             body["ok"] = "Ok";
+            code = ResponseStatus::Created;
         }
         response.set_body(body.dump());
+        response.set_code(code);
         return response;
     }
 };
