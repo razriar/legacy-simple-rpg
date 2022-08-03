@@ -11,10 +11,12 @@ struct User {
     class Password : public Property<User, std::string> {};
     class Name : public Property<User, std::string> {};
     class Nick : public Property<User, std::string> {};
+    class Secret : public Property<User, std::string> {};
 
     Email email;
     Password password;
     Name name;
     Nick nick;
+    Secret secret;
 };
 }  // namespace bll
