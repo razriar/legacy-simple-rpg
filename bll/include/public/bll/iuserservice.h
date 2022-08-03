@@ -9,6 +9,7 @@ enum RegistrationStatus {
 };
 class IUserService {
    public:
+    virtual ~IUserService() = default;
     virtual RegistrationStatus RegisterUser(const RegData&) = 0;
 };
 }  // namespace bll
