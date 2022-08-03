@@ -27,8 +27,7 @@ class ExistanceQuery : public Query<Object> {
         auto column = Metadata<OwnedProperty>::ColumnName();
         if (!column)
             throw std::invalid_argument("Queried property has no metadata");
-        Condition condition = {
-            .column = *column, .comparator = comparator, .value = value};
+        Condition condition = {*column, comparator, value};
         conditions_.push_back(condition);
     }
     std::vector<Condition> conditions() { return conditions_; }
