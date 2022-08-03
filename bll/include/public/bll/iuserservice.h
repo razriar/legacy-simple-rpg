@@ -1,15 +1,15 @@
 #pragma once
 
-#include "regdata.h"
+#include "signupdata.h"
 
 namespace bll {
-enum RegistrationStatus {
+enum SignUpStatus {
     Ok = 0,
     UserExists,
 };
 class IUserService {
    public:
     virtual ~IUserService() = default;
-    virtual RegistrationStatus RegisterUser(const RegData&) = 0;
+    virtual SignUpStatus SignUpUser(const SignUpData&) = 0;
 };
 }  // namespace bll

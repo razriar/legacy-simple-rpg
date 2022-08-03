@@ -3,7 +3,7 @@
 #include <string>
 
 namespace bll {
-struct RegData {
+struct SignUpData {
     std::string email;
     std::string password;
     std::string name;
