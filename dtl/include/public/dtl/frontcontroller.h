@@ -14,7 +14,7 @@ namespace dtl {
 typedef std::function<Response(const Request&)> Handler;
 template <class Action>
 concept Targeted = requires() {
-    { Action::Target() } -> std::same_as<Target>;
+    { Action::RequestTarget() } -> std::same_as<Target>;
 };
 template <class Action>
 concept GetResponding = requires(const Request& request) {
@@ -42,7 +42,7 @@ class FrontController {
 
     template <Targeted Action>
     void RegisterAction() {
-        auto target = Action::Target();
+        auto target = Action::RequestTarget();
         if constexpr (GetResponding<Action>) {
             auto key = std::pair(target, Method::Get);
             map_[key] = &Action::Get;

@@ -13,7 +13,7 @@
 namespace dtl {
 class RegisterAction {
    public:
-    static Target Target() { return std::string("/api/register"); }
+    static Target RequestTarget() { return std::string("/api/register"); }
     static Response Post(const Request& request) {
         using json = nlohmann::json;
         auto data = json::parse(request.body());
