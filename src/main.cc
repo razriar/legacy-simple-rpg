@@ -8,7 +8,7 @@
 #include "bll/userservice.h"
 #include "dal/dbcontext.h"
 #include "dtl/actions/echoaction.h"
-#include "dtl/actions/registeraction.h"
+#include "dtl/actions/signupaction.h"
 #include "dtl/frontcontroller.h"
 #include "dtl/serverfactory.h"
 
@@ -25,7 +25,7 @@ int main() {
     bll::Registry::SetUserService(service);
     auto controller = dtl::FrontController();
     controller.RegisterAction<dtl::EchoAction>();
-    controller.RegisterAction<dtl::RegisterAction>();
+    controller.RegisterAction<dtl::SignUpAction>();
     auto factory = dtl::ServerFactory();
     auto server = factory.Create<dtl::Server>(controller, "8000", "4");
     server.Run();

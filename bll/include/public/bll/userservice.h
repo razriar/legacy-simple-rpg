@@ -25,7 +25,7 @@ class UserService : public IUserService {
     }
 
    public:
-    RegistrationStatus RegisterUser(const RegData &data) override {
+    SignUpStatus SignUpUser(const SignUpData &data) override {
         auto context = DBContext();
         {
             auto query = ExistanceQuery<User>();

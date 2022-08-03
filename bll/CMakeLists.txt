@@ -7,7 +7,7 @@ add_library(${PROJECT_NAME}
     include/public/bll/queries/existancequery.h
     include/public/bll/queries/creationquery.h
     include/public/bll/property.h
-    include/public/bll/regdata.h
+    include/public/bll/signupdata.h
     include/public/bll/user.h
     include/public/bll/registry.h
     include/public/bll/iuserservice.h

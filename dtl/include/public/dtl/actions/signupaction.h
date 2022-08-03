@@ -1,6 +1,6 @@
 #pragma once
 
-#include <bll/regdata.h>
+#include <bll/signupdata.h>
 #include <bll/registry.h>
 
 #include <iostream>
@@ -11,13 +11,13 @@
 #include "dtl/target.h"
 
 namespace dtl {
-class RegisterAction {
+class SignUpAction {
    public:
     static Target RequestTarget() { return std::string("/api/register"); }
     static Response Post(const Request& request) {
         using json = nlohmann::json;
         auto data = json::parse(request.body());
-        auto reg_data = bll::RegData();
+        auto reg_data = bll::SignUpData();
         try {
             reg_data.email = data["email"];
             reg_data.password = data["password"];
@@ -31,14 +31,14 @@ class RegisterAction {
             return response;
         }
         auto service = bll::Registry::GetUserService();
-        auto status = service->RegisterUser(reg_data);
+        auto status = service->SignUpUser(reg_data);
         auto response = Response();
         json body;
         ResponseStatus code;
-        if (status == bll::RegistrationStatus::UserExists) {
+        if (status == bll::SignUpStatus::UserExists) {
             body["error"] = "User with that email already exists";
             code = ResponseStatus::Conflict;
-        } else if (status == bll::RegistrationStatus::Ok) {
+        } else if (status == bll::SignUpStatus::Ok) {
             body["ok"] = "Ok";
             code = ResponseStatus::Created;
         }
