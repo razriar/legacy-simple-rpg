@@ -12,10 +12,9 @@ struct User {
     class Name : public Property<User, std::string> {};
     class Nick : public Property<User, std::string> {};
 
-    Id id;
     Email email;
     Password password;
-    Name last_name;
+    Name name;
     Nick nick;
 };
 }  // namespace bll
