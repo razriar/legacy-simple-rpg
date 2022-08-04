@@ -14,7 +14,7 @@ namespace dtl {
 class SignUpAction {
    public:
     static Target RequestTarget() { return std::string("/api/register"); }
-    static Response Post(const Request& request) {
+    static Response Put(const Request& request) {
         using json = nlohmann::json;
         auto data = json::parse(request.body());
         auto reg_data = bll::SignUpData();
