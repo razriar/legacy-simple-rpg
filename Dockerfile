@@ -1,25 +1,23 @@
 FROM ubuntu:latest as env
 
-RUN apt-get update
-RUN apt-get install -y gcc g++ libboost-dev cmake curl valgrind
+RUN apt update
+RUN apt install -y gcc g++ libboost-dev cmake
+RUN apt install -y libpq-dev postgresql-server-dev-all
 
 FROM env as build
 
 COPY . /app
 
-WORKDIR /app/build
+WORKDIR /app/bin
 
 RUN cmake ..
-RUN cmake --build .
+RUN cmake --build . --target server
 
 WORKDIR /app
-
-RUN touch out.log
-RUN chmod a+rw out.log
 
 RUN groupadd -r sample && useradd -r -g sample sample
 USER sample
 
 EXPOSE 8080
 
-ENTRYPOINT valgrind --leak-check=yes ./build/server
+ENTRYPOINT ./bin/server
