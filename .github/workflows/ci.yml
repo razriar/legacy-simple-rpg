@@ -16,6 +16,18 @@ jobs:
         with:
           push: true
           tags: razriar/repo:latest
+      - name: Pull and deploy
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: | 
+            docker kill server &&
+            docker rm server &&
+            docker pull razriar/repo && 
+            docker run -d --network=host --name server razriar/repo
+          host: ${{ secrets.HOST }}
+          username: root
+          passphrase: ${{ secrets.PASSPHRASE }}
+          privateKey: ${{ secrets.PRIVATE_KEY }}
       - name: Notify failure
         if: failure()
         uses: appleboy/telegram-action@master
@@ -24,7 +36,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Repository: ${{ github.repository }}
-            Build failure
+            Deploy failure
       - name: Notify success
         if: success()
         uses: appleboy/telegram-action@master
@@ -33,12 +45,4 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Repository: ${{ github.repository }}
-            Build success
-      - name: Pull and deploy
-        uses: garygrossgarten/github-action-ssh@release
-        with:
-          command: docker pull razriar/repo docker run -d --network=host --name server razriar/repo
-          host: ${{ secrets.HOST }}
-          username: root
-          passphrase: ${{ secrets.PASSPHRASE }}
-          privateKey: ${{ secrets.PRIVATE_KEY }}
+            Deploy success
