@@ -4,9 +4,11 @@ project(bll)
 add_library(${PROJECT_NAME}
     STATIC
     include/public/bll/queries/query.h
+    include/public/bll/queries/selectionquery.h
     include/public/bll/queries/existancequery.h
     include/public/bll/queries/creationquery.h
     include/public/bll/property.h
+    include/public/bll/signindata.h
     include/public/bll/signupdata.h
     include/public/bll/user.h
     include/public/bll/registry.h
