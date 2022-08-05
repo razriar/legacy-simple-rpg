@@ -5,4 +5,4 @@ CREATE TABLE users (
     name varchar,
     nick varchar,
     secret varchar
-)
+);
