@@ -24,7 +24,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Repository: ${{ github.repository }}
-            CI failure
+            Build failure
       - name: Notify success
         if: success()
         uses: appleboy/telegram-action@master
@@ -33,4 +33,11 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Repository: ${{ github.repository }}
-            CI Success
+            Build success
+      - name: SSH to server
+        run: ssh root@{{sectets.SERVER_ADDRESS}}
+      - name: Pull from DockerHub
+        run: docker pull razriar/repo
+      - name: Deploy
+        run: docker run -d --network=host --name server razriar/repo
+
