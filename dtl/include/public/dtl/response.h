@@ -5,7 +5,7 @@
 
 namespace dtl {
 enum ResponseStatus {
-    Ok = 201,
+    Ok = 200,
     Created = 201,
     NotFound = 404,
     Conflict = 409,
