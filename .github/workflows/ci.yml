@@ -34,10 +34,11 @@ jobs:
           message: |
             Repository: ${{ github.repository }}
             Build success
-      - name: SSH to server
-        run: ssh root@{{sectets.SERVER_ADDRESS}}
-      - name: Pull from DockerHub
-        run: docker pull razriar/repo
-      - name: Deploy
-        run: docker run -d --network=host --name server razriar/repo
-
+      - name: Pull and deploy
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: docker pull razriar/repo docker run -d --network=host --name server razriar/repo
+          host: ${{ secrets.HOST }}
+          username: root
+          passphrase: ${{ secrets.PASSPHRASE }}
+          privateKey: ${{ secrets.PRIVATE_KEY }}
