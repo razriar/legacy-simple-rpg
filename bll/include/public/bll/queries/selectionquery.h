@@ -1,6 +1,5 @@
 #pragma once
 
-#include <any>
 #include <vector>
 
 #include "bll/property.h"
@@ -9,9 +8,10 @@
 
 namespace bll {
 template <class Object>
-class ExistanceQuery : public Query<Object> {
+class SelectionQuery : public Query<Object> {
    private:
     std::vector<Condition> conditions_;
+    std::vector<std::string> fields_;
 
    public:
     template <OwnedBy<Object> OwnedProperty>
@@ -24,5 +24,13 @@ class ExistanceQuery : public Query<Object> {
         conditions_.push_back(condition);
     }
     std::vector<Condition> conditions() { return conditions_; }
+    template <OwnedBy<Object> OwnedProperty>
+    void Field() {
+        auto column = Metadata<OwnedProperty>::ColumnName();
+        if (!column)
+            throw std::invalid_argument("Queried property has no metadata");
+        fields_.push_back(*column);
+    }
+    std::vector<std::string> fields() { return fields_; }
 };
 }  // namespace bll

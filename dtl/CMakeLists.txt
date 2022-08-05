@@ -7,6 +7,7 @@ add_library(${PROJECT_NAME}
     include/public/dtl/concepts/serverconcept.h
     include/public/dtl/actions/echoaction.h
     include/public/dtl/actions/signupaction.h
+    include/public/dtl/actions/signinaction.h
     include/public/dtl/frontcontroller.h
     include/public/dtl/iocontext.h
     include/public/dtl/listener.h

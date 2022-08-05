@@ -7,6 +7,7 @@
 #include "iuserservice.h"
 #include "queries/creationquery.h"
 #include "queries/existancequery.h"
+#include "queries/selectionquery.h"
 #include "user.h"
 
 namespace bll {
@@ -43,6 +44,17 @@ class UserService : public IUserService {
         query.Add<User::Secret>(RandomString(secret_size));
         context.Execute(query);
         return Ok;
+    }
+    SignInResult SignInUser(const SignInData &data) override {
+        auto context = DBContext();
+        auto query = SelectionQuery<User>();
+        query.Field<User::Id>();
+        query.Field<User::Secret>();
+        query.Require<User::Email>(Comparator::Equal, data.email);
+        query.Require<User::Password>(Comparator::Equal, data.password);
+        User user = context.Execute(query);
+        AccessToken token = { user.id, user.secret };
+        return { token, SignInStatus::Ok };
     }
 };
 }  // namespace bll
