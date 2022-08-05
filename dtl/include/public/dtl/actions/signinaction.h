@@ -37,10 +37,8 @@ class SignInAction {
             body["error"] = "User not found";
             code = ResponseStatus::NotFound;
         } else if (result.status == bll::SignInStatus::Ok) {
-            json token;
-            token["id"] = result.token->id;
-            token["secret"] = result.token->secret;
-            body["token"] = token;
+            body["id"] = result.token->id;
+            body["secret"] = result.token->secret;
             code = ResponseStatus::Ok;
         }
         response.set_body(body.dump());
