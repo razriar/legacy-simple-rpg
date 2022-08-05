@@ -25,7 +25,7 @@ jobs:
           message: |
             Repository: ${{ github.repository }}
             CI failure
-      - name: Notify failure
+      - name: Notify success
         if: success()
         uses: appleboy/telegram-action@master
         with:
